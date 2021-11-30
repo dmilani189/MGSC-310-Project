@@ -1,0 +1,108 @@
+---
+title: "Final Project"
+author: ""
+subtitle: MGSC 310 Project 
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+---
+
+
+```{r setup, include=FALSE}
+
+# Please leave this code chunk as is. It makes some slight formatting changes to alter the output to be more aesthetically pleasing. 
+
+library(knitr)
+
+# Change the number in set seed to your own favorite number
+set.seed(1818)
+options(width=70)
+options(scipen=99)
+
+
+# this sets text outputted in code chunks to small
+opts_chunk$set(tidy.opts=list(width.wrap=50),tidy=TRUE, size = "vsmall")  
+opts_chunk$set(message = FALSE,                                          
+               warning = FALSE,
+               # "caching" stores objects in code chunks and only rewrites if you change things
+               cache = FALSE,                               
+               # automatically downloads dependency files
+               autodep = TRUE,
+               # 
+               cache.comments = FALSE,
+               # 
+               collapse = TRUE,
+               # change fig.width and fig.height to change the code height and width by default
+               fig.width = 5.5,  
+               fig.height = 4.5,
+               fig.align='center')
+
+
+```
+
+```{r setup-2}
+
+# Always print this out before your assignment
+sessionInfo()
+getwd()
+
+```
+
+
+<!-- ### start answering your problem set here -->
+<!-- You may export your homework in either html or pdf, with the former usually being easier. 
+     To export or compile your Rmd file: click above on 'Knit' then 'Knit to HTML' -->
+<!-- Be sure to submit both your .Rmd file and the compiled .html or .pdf file for full credit -->
+
+
+```{r setup-3}
+
+library("here")
+library("tidyverse")
+library("forcats")
+library("rsample")
+library("ggplot2")
+library("ggmap")
+library("dplyr")
+
+
+```
+
+
+
+```{r}
+
+crashes <- read.csv(here("datasets", "US_Accidents_Dec20_updated.csv"))
+
+
+```
+
+
+
+```{r}
+
+qmplot(Start_Lng, Start_Lat, data = crashes, maptype = "toner-lite") + facet_wrap(~ Severity)
+
+
+
+```
+
+
+
+```{r}
+
+qmplot(End_Lng, End_Lat, data = crashes, maptype = "toner-lite")
+
+```
+
+```{r}
+
+crashes_split <- initial_split(crashes, prop = 0.75)
+
+crashes_train <- training(crashes_split)
+crashes_test <- testing(crashes_split)
+
+
+```
+
