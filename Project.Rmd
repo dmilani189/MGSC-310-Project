@@ -93,7 +93,14 @@ summary(crashes)
 crashes_clean <-
   crashes %>% 
   mutate(Start_Time_Clean = ymd_hms(Start_Time),
-         End_Time_Clean = ymd_hms(End_Time))
+         End_Time_Clean = ymd_hms(End_Time),
+         Weather_Condition_Clean = as.factor(Weather_Condition),
+         Wind_Direction_Clean = as.factor(Wind_Direction),
+         Weather_Timestamp_Clean = ymd_hms(Weather_Timestamp),
+         State_Clean = as.factor(State),
+         County_Clean = as.factor(County),
+         City_Clean = as.factor(City),
+         Side_Clean = as.factor(Side))
   
 
 summary(crashes_clean)
