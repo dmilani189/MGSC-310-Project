@@ -1,6 +1,6 @@
 ---
 title: "Final Project"
-author: ""
+author: "Derek Milani, Nasser Aljasser, Lisa Pham, Daniel Chelling"
 subtitle: MGSC 310 Project 
 output:
   html_document:
@@ -78,23 +78,39 @@ crashes <- read.csv(here("datasets", "US_Accidents_Dec20_updated.csv"))
 
 ```
 
-
-
 ```{r}
 
-qmplot(Start_Lng, Start_Lat, data = crashes, maptype = "toner-lite") + facet_wrap(~ Severity)
+summary(crashes)
 
 
 
 ```
 
 
+```{r}
+
+qmplot(Start_Lng, Start_Lat, data = crashes, maptype = "toner-lite", color = factor(Severity))
+
+qmplot(End_Lng, End_Lat, data = crashes, maptype = "toner-lite", color = factor(Severity))
+
+
+```
 
 ```{r}
 
-qmplot(End_Lng, End_Lat, data = crashes, maptype = "toner-lite")
+ggplot(data = crashes, aes(x = Severity)) + geom_histogram()
+
+
 
 ```
+
+```{r}
+
+ggplot(data = crashes, aes(x = Start_Time, y = Distance.mi.)) + geom_line()
+
+
+```
+
 
 ```{r}
 
@@ -106,8 +122,3 @@ crashes_test <- testing(crashes_split)
 
 ```
 
-```{r}
-
-
-
-```
