@@ -65,6 +65,7 @@ library("rsample")
 library("ggplot2")
 library("ggmap")
 library("dplyr")
+library("lubridate")
 
 
 ```
@@ -86,6 +87,20 @@ summary(crashes)
 
 ```
 
+```{r}
+
+
+crashes_clean <-
+  crashes %>% 
+  mutate(Start_Time_Clean = ymd_hms(Start_Time),
+         End_Time_Clean = ymd_hms(End_Time))
+  
+
+summary(crashes_clean)
+
+
+```
+
 
 ```{r}
 
@@ -98,7 +113,7 @@ qmplot(End_Lng, End_Lat, data = crashes, maptype = "toner-lite", color = factor(
 
 ```{r}
 
-ggplot(data = crashes, aes(x = Severity)) + geom_histogram()
+ggplot(data = crashes_clean, aes(x = Severity)) + geom_histogram()
 
 
 
@@ -106,15 +121,34 @@ ggplot(data = crashes, aes(x = Severity)) + geom_histogram()
 
 ```{r}
 
-ggplot(data = crashes, aes(x = Start_Time, y = Distance.mi.)) + geom_line()
+ggplot(data = crashes_clean, aes(x = Start_Time_Clean, y = Distance.mi.)) + geom_line()
+
+
+```
+
+```{r}
+
+crashes_clean %>% 
+  ggplot(aes(Start_Time_Clean)) + geom_histogram(binwidth = 86400)
+
+```
+
+```{r}
+
+crashes_clean %>% 
+  mutate(wday = wday(Start_Time, label = TRUE)) %>% 
+  ggplot(aes(x = wday)) +
+    geom_bar()
+
 
 
 ```
 
 
+
 ```{r}
 
-crashes_split <- initial_split(crashes, prop = 0.75)
+crashes_split <- initial_split(crashes_clean, prop = 0.75)
 
 crashes_train <- training(crashes_split)
 crashes_test <- testing(crashes_split)
