@@ -84,7 +84,6 @@ crashes <- read.csv(here("datasets", "US_Accidents_Dec20_updated.csv"))
 summary(crashes)
 
 
-
 ```
 
 ```{r}
